@@ -14,5 +14,5 @@ main.c
 ./signals -- THis dir will be used as communication channel between c-files and scripts
 
 * make sytem to communicate script file and c file easily and effeciently.
-	
+	- make func that takes filename to exeute and return char *
 
