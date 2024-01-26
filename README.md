@@ -16,3 +16,11 @@ main.c
 * make sytem to communicate script file and c file easily and effeciently.
 	- make func that takes filename to exeute and return char *
 
+
+### NOTE ### ---
+ for now, we are making application that can't be installed and called like any normal call. 
+i.e for now, we don't have to worry about which file is where.. 
+
+for later update, we can intrudce it....
+
+for now, just assume that all the fils and folders are inside a dir... ie. checkWps;
