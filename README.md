@@ -15,6 +15,25 @@ main.c
 
 * make sytem to communicate script file and c file easily and effeciently.
 	- make func that takes filename to exeute and return char *
+	
+	- FIXED ::: 1. for login ,, make the script to write the user_name in the ./user_data/.login
+						-- if can't find the usr :: write NULL
+						-- else write the usr_name
+						-- CAUTION :: usr name can't be NULL
+						-- 
+						-- so just sytem(script addr) -- it will do all the work
+
+* make the login-portal
+	- options :: 
+	first check for already login usr-- if true then direct login and call main_display func.
+
+	1. login -- find the usr if not found then return the error message then return back to screen
+	2. sign-up -- make a/c
+
+	function : 
+	1. login home page
+	2. sign-up home page
+	3. success screen
 
 
 ### NOTE ### ---
