@@ -8,17 +8,22 @@
 				printw("%c",' ');\
 		}
 
+#define warning(string) \
+		attron(COLOR_PAIR(1));\
+        attron(A_BOLD);\
+        printw(string);\
+        attroff(COLOR_PAIR(1));\
+        attroff(A_BOLD);
+
+
 
 // usrname len -- 60
 char temp_user[usr_name_len];
 
-void login_init(); // checks if already exit any usrname;
-void r_usr(); // set defalut val of temp_user;
-int login_portal(); // This concludes the whole screen of login 
-					// it internally calls the other login fucntion like sign-up
-					// it modify the temp_user
-					// return 0 -- for success 
-					// return 1 -- for failure
+void login_init();
+void r_usr();
+void login_portal(); 
+void login(); 
 
 
 int main(){
@@ -66,16 +71,10 @@ void r_usr(){
 		}
 }
 
-int login_portal(){
+void login_portal(){
 		init_pair(1,COLOR_RED,COLOR_BLACK);
 		int input='1';
-		
-		//f1 to exit
-		attron(COLOR_PAIR(1));
-		attron(A_BOLD);
-		printw("exit <f1>");
-		attroff(COLOR_PAIR(1));
-		attroff(A_BOLD);
+		warning("exit <f1>")
 		
 		int option=0; // defalut selected option
 		
@@ -124,13 +123,91 @@ int login_portal(){
 				
 
 				input = getch();
+				if(input == 10 || input == KEY_ENTER){ //here 10 means Enter
+						login();
+				}
 				if(input == KEY_DOWN || input == KEY_UP){
 						option = (option+1)%2;
 				}
 
-		}
-		return 0;
 }
+}
+
+
+
+void login(){
+		char *display_username = "Username : ";
+		char *display_password = "Password : ";
+		int ch;
+		int len=0;
+		int x = getmaxx(stdscr);
+		
+		char f_username[usr_name_len]={'\0'};
+
+		clear();
+		warning("exit <f1>")
+		
+		move(2,(x/2)-strlen(display_username)-20);
+		printw("%s",display_username);
+
+		while(ch!=10){
+				ch = getch();
+				if(ch == KEY_END || ch == KEY_HOME || ch == KEY_F(2) || ch == KEY_F(3) ||ch ==  KEY_F(4)){
+						len+=0;
+				}
+				else if(ch == KEY_F(5) || ch == KEY_F(5) || ch == KEY_F(6)  || ch == KEY_F(7) || ch == KEY_F(8)){
+						len+=0;
+				}
+				else if(ch==KEY_F(9) || ch == KEY_F(10) || ch == KEY_F(11) || ch == KEY_F(12)){
+						len+=0;
+				}
+				else if(ch == KEY_ENTER){
+						break;
+				}
+				else if(ch == KEY_BACKSPACE){
+						if(len != 0){
+								if(len==31){
+										move(1,x/2);
+										clearr(strlen("Length of username can't exceed 30"));
+								}
+								len--;
+								f_username[len]='\0';
+								move(2,(x/2)-strlen(display_username)-20);
+								clearr(strlen(display_username)+len+1);
+
+								move(2,(x/2-strlen(display_username)-20));
+								printw("%s%s",display_username,f_username);
+						}
+				}
+				else{
+						if(len > usr_name_len){
+								move(1,x/2);
+								warning("Length of username can't exceed 30");
+						}
+						else{
+								printw("%c",ch);
+								f_username[len]=ch;
+								len++;
+						}		
+				}
+						
+
+		}
+		move(5,5);
+		printw("%s",f_username);
+		refresh();
+		getch();
+		clear();
+		refresh();
+		
+
+}
+
+
+
+
+
+
 
 
 

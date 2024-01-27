@@ -3,8 +3,7 @@ main code ::
 
 login_init()
 
-if (temp_user == NULL):
-		error message -- 
+if (temp_user == NULL): 
 		login-portal
 else
 		checkwps homepage

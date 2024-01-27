@@ -1,0 +1,42 @@
+
+##(void func) login init(); 
+
+- checks wether the already a user logged in or not
+- if yes: then change the (global -> temp_user) to the username.
+- else: set (global var -> temp_user) to NULL
+- (global var -> temp_user) it holds the name of user(defined in def.h)
+- max len of temp_user is 60;
+
+
+##(void func) r_usr();
+
+- reset the (global var -> temp_user).
+- use : if username == NULL then call r_usr();
+
+##(void func) login_portal();
+
+- This is like homepage of login
+- returns nothing
+- give option1 -- login and option2 -- signup
+- if <f1> press -- exit from while loop
+- up and down button for nevigation
+- press <Enter> for selection of option
+- after selection it calls respective func.. ie. login and signup
+
+## (void func) login();
+
+- ask for username and pass, then find user.
+- finding user is done by "bash script".
+- if user found.. write ./usr_data/.login 
+- and
+- write the (global var ) temp_user to the username;
+- 
+- if user not found then print error message
+- then return to the login_portal;
+-
+- while enteringt pass... use * character
+
+
+
+
+
