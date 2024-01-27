@@ -143,6 +143,7 @@ void login(){
 		int x = getmaxx(stdscr);
 		
 		char f_username[usr_name_len]={'\0'};
+		char f_password[usr_name_len]={'\0'};
 
 		clear();
 		warning("exit <f1>")
@@ -162,6 +163,9 @@ void login(){
 						len+=0;
 				}
 				else if(ch == KEY_ENTER){
+						break;
+				}
+				else if(ch==10){
 						break;
 				}
 				else if(ch == KEY_BACKSPACE){
@@ -193,8 +197,65 @@ void login(){
 						
 
 		}
+		len=0;
+		ch=-1;
+		
+		move(3,(x/2)-strlen(display_password)-20);
+		printw("%s",display_password);
+		
+		while(ch!=10){
+				ch = getch();
+				if(ch == KEY_END || ch == KEY_HOME || ch == KEY_F(2) || ch == KEY_F(3) ||ch ==  KEY_F(4)){
+						len+=0;
+				}
+				else if(ch == KEY_F(5) || ch == KEY_F(5) || ch == KEY_F(6)  || ch == KEY_F(7) || ch == KEY_F(8)){
+						len+=0;
+				}
+				else if(ch==KEY_F(9) || ch == KEY_F(10) || ch == KEY_F(11) || ch == KEY_F(12)){
+						len+=0;
+				}
+				else if(ch == KEY_ENTER){
+						break;
+				}
+				else if(ch ==10){
+						break;
+				}
+				else if(ch == KEY_BACKSPACE){
+						if(len != 0){
+								if(len==31){
+										move(1,x/2);
+										clearr(strlen("Length of password can't exceed 30"));
+								}
+								len--;
+								f_password[len]='\0';
+								move(3,(x/2)-strlen(display_password)-20);
+								clearr(strlen(display_password)+len+1);
+
+								move(3,(x/2-strlen(display_password)-20));
+								printw("%s",display_password);
+
+								for(int i=0;i<len;i++){
+										addch('*');
+								}
+
+						}
+				}
+				else{
+						if(len > usr_name_len){
+								move(1,x/2);
+								warning("Length of password can't exceed 30");
+						}
+						else{
+								addch('*');
+								f_password[len]=ch;
+								len++;
+						}		
+				}
+						
+
+		}
 		move(5,5);
-		printw("%s",f_username);
+		printw(">user : %s >pass : %s",f_username,f_password);
 		refresh();
 		getch();
 		clear();
