@@ -1,0 +1,11 @@
+#!/bin/bash
+
+
+if [ -d $1 ]
+then
+		echo -n "1" > signal
+else
+		echo -n "0" > signal
+fi
+
+

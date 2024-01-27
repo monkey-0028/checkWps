@@ -1,0 +1,6 @@
+have to pass the full address of username directory
+
+if it founded dir. then it writes a signal file
+
+if 1 -- Found
+if 0 -- Not found

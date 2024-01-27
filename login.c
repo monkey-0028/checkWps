@@ -2,6 +2,7 @@
 #include <curses.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
 
 #define clearr(len) \
 		for(int i=0;i<len;i++){\
@@ -24,6 +25,7 @@ void login_init();
 void r_usr();
 void login_portal(); 
 void login(); 
+char read_signal();
 
 
 int main(){
@@ -254,9 +256,64 @@ void login(){
 						
 
 		}
-		move(5,5);
-		printw(">user : %s >pass : %s",f_username,f_password);
+		char addr[70]="./scripts/check_username ./user_data/";
+		strcat(addr,f_username);
+
+		system(addr);
+
+		char char_signal=read_signal();
+		if(char_signal == 'N'){
+				move(5,5);
+				warning("--something went wrong--");
+		}
+		else if( char_signal == '0' ){
+				move(5,5);
+				warning("user not found");
+		}
+		else{
+				move(6,6);
+				printw("user found");
+				refresh();
+				FILE *passcheck;
+				char naddr[70]="./user_data/";
+				strcat(naddr,f_username);
+				strcat(naddr,"/.pass");
+				passcheck = fopen(naddr,"r");
+				if(passcheck == NULL){
+						move(5,5);
+						warning("Something went wrong");
+				}
+				else{
+						char pch=fgetc(passcheck);
+						short int flag=0;
+						short int ptr=0;
+						while(pch !=EOF){
+								if(pch == f_password[ptr]){
+										ptr++;
+								}
+								else{
+										flag=1;
+										break;
+								}
+
+						}
+						if(flag==1){
+								move(5,5);
+								printw("not matched");
+						}
+						else{
+								move(5,5);
+								printw("matched");
+						}
+
+				}
+				
+		}
+
 		refresh();
+
+		
+
 		getch();
 		clear();
 		refresh();
@@ -265,7 +322,16 @@ void login(){
 }
 
 
-
+char read_signal(){
+		FILE *file;
+		file=fopen("signal","r");
+		if(file == NULL){
+				return 'N';
+		}
+		char ch = fgetc(file);
+		fclose(file);
+		return ch;
+}
 
 
 
