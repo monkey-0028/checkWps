@@ -1,0 +1,10 @@
+main code ::
+
+
+login_init()
+
+if (temp_user == NULL):
+		error message -- 
+		login-portal
+else
+		checkwps homepage

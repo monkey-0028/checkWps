@@ -26,7 +26,8 @@ main.c
 * make the login-portal
 	- options :: 
 	first check for already login usr-- if true then direct login and call main_display func.
-
+	if , already login then "cd usrname folder"***
+	
 	1. login -- find the usr if not found then return the error message then return back to screen
 	2. sign-up -- make a/c
 
