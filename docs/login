@@ -31,7 +31,7 @@
 - and
 - write the (global var ) temp_user to the username;
 - 
-- if user not found then print error message
+- if user not found then print error message and write (global val -- temp_user) to NULL;
 - then return to the login_portal;
 -
 - while enteringt pass... use * character
