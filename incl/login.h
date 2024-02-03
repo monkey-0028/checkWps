@@ -1,51 +1,3 @@
-#include "./incl/def.h"
-#include <curses.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <string.h>
-
-#define clearr(len) \
-		for(int i=0;i<len;i++){\
-				printw("%c",' ');\
-		}
-
-#define warning(string) \
-		attron(COLOR_PAIR(1));\
-        attron(A_BOLD);\
-        printw(string);\
-        attroff(COLOR_PAIR(1));\
-        attroff(A_BOLD);
-
-
-
-// usrname len -- 60
-char temp_user[usr_name_len]={'\0'};
-
-void login_init();
-void r_usr();
-void login_portal(); 
-void login(); 
-char read_signal();
-
-
-int main(){
-		initscr(); 
-		start_color();
-		raw();
-		noecho();
-		keypad(stdscr, TRUE);
-		curs_set(0);
-		//
-		init_pair(2, COLOR_WHITE, COLOR_BLACK);
-		wbkgd(stdscr, COLOR_PAIR(2)); // changed background color of stdscr to black
-
-		login_portal();
-		//
-		curs_set(1);
-		endwin();
-		return 0;
-}
-
 void login_init(){
 		FILE *file;
 		file = fopen("./user_data/.login","r");
@@ -127,10 +79,22 @@ void login_portal(){
 
 				input = getch();
 				if(input == 10 || input == KEY_ENTER){ //here 10 means Enter
-						login();
+						if(option == 0){
+								login();
+								if(strcmp(temp_user,"NULL")!=0){
+										printw("logged in succesfully");
+										refresh();
+										getch();
+										//here break the loop
+								}	
+						}
+						else{
+								printw("call sign-up functon");
+								refresh();
+								getch();
+						}
 						
 						refresh();
-						getch();
 						clear();
 				}
 				if(input == KEY_DOWN || input == KEY_UP){
@@ -292,7 +256,11 @@ void login(){
 				passcheck = fopen(naddr,"r");
 				if(passcheck == NULL){
 						move(5,5);
-						warning("Something went wrong");
+						warning(" wrong pass");
+						getch();
+						r_usr();
+						setNULL
+						
 				}
 				else{
 						char pch=fgetc(passcheck);

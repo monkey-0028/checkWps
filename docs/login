@@ -39,4 +39,18 @@
 
 
 
+## (macro) setNULL
+- This sets the temp_user(a global var (char)) to "NULL";
+- You have to call r_usr(a function) manually.
+
+## (macro) warning(string)
+- take string as input
+- print the string in RED color;
+- you have to use move(y,x) function to set the position of the cursor
+- using colorpair(1).. it must be defined in main before even calling the function.
+
+## (macro) clearr(len)
+- Take (int) as input
+- clear the verticle space (swap the filler with <space>) up to the given length;
+
 
