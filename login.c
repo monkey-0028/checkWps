@@ -19,7 +19,7 @@
 
 
 // usrname len -- 60
-char temp_user[usr_name_len];
+char temp_user[usr_name_len]={'\0'};
 
 void login_init();
 void r_usr();
@@ -76,7 +76,6 @@ void r_usr(){
 void login_portal(){
 		init_pair(1,COLOR_RED,COLOR_BLACK);
 		int input='1';
-		warning("exit <f1>")
 		
 		int option=0; // defalut selected option
 		
@@ -89,6 +88,8 @@ void login_portal(){
 		int x = getmaxx(stdscr);
 
 		while(input != KEY_F(1)){
+				move(0,0);
+				warning("exit <f1>")
 				if(option == 0){
 						attron(COLOR_PAIR(1));
 						move(2,(x/2)-strlen(Selected_option1));
@@ -127,6 +128,10 @@ void login_portal(){
 				input = getch();
 				if(input == 10 || input == KEY_ENTER){ //here 10 means Enter
 						login();
+						
+						refresh();
+						getch();
+						clear();
 				}
 				if(input == KEY_DOWN || input == KEY_UP){
 						option = (option+1)%2;
@@ -153,6 +158,7 @@ void login(){
 		move(2,(x/2)-strlen(display_username)-20);
 		printw("%s",display_username);
 
+		//enter username
 		while(ch!=10){
 				ch = getch();
 				if(ch == KEY_END || ch == KEY_HOME || ch == KEY_F(2) || ch == KEY_F(3) ||ch ==  KEY_F(4)){
@@ -205,6 +211,7 @@ void login(){
 		move(3,(x/2)-strlen(display_password)-20);
 		printw("%s",display_password);
 		
+		//Enter password
 		while(ch!=10){
 				ch = getch();
 				if(ch == KEY_END || ch == KEY_HOME || ch == KEY_F(2) || ch == KEY_F(3) ||ch ==  KEY_F(4)){
@@ -269,11 +276,15 @@ void login(){
 		else if( char_signal == '0' ){
 				move(5,5);
 				warning("user not found");
+				r_usr();
+				temp_user[0]='N';
+				temp_user[1]='U';
+				temp_user[2]='L';
+				temp_user[3]='L';
+				refresh();
+				getch();
 		}
 		else{
-				move(6,6);
-				printw("user found");
-				refresh();
 				FILE *passcheck;
 				char naddr[70]="./user_data/";
 				strcat(naddr,f_username);
@@ -295,26 +306,30 @@ void login(){
 										flag=1;
 										break;
 								}
+								pch=fgetc(passcheck);
 
 						}
 						if(flag==1){
 								move(5,5);
-								printw("not matched");
+								warning(" wrong password ");
+								getch();
+								r_usr();
+								temp_user[0]='N';
+								temp_user[1]='U';
+								temp_user[2]='L';
+								temp_user[3]='L';
 						}
 						else{
-								move(5,5);
-								printw("matched");
+								r_usr();
+								for(int i=0;i<strlen(f_username);i++){
+										temp_user[i] = f_username[i];
+								}
 						}
 
 				}
 				
 		}
 
-		refresh();
-
-		
-
-		getch();
 		clear();
 		refresh();
 		
